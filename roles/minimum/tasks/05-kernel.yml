@@ -60,5 +60,6 @@
     - ntfs-3g
     - cifs-utils
     - libncurses-dev
+    - nano
 
 
