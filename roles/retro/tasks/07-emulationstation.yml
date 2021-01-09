@@ -11,6 +11,8 @@
     - libboost-filesystem1.71.0
     - libsdl2-2.0-0
     - libcurl4
+    - libvlc-dev
+    - libopengl-dev
 
 - name: Install EmulationStation debian dependencies.
   apt:
