@@ -1,0 +1,68 @@
+
+#Install emulationstation
+---
+- name: Install EmulationStation dependencies.
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - libfreeimage3
+    - libboost-locale1.71.0
+    - libboost-filesystem1.71.0
+    - libsdl2-2.0-0
+    - libcurl4
+
+- name: Install EmulationStation debian dependencies.
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - libboost-locale1.74.0
+    - libboost-filesystem1.74.0
+  when: ansible_distribution == 'Debian'
+
+- name: Download attract mode deb. 64 bit.
+  get_url:
+    url: "https://www.dropbox.com/s/63fu84nfztz8rlb/emulationstation.deb?dl=1"
+    dest: "/root/emulationstation.deb"
+  when: ansible_architecture == 'x86_64'
+
+- name: Download attract mode deb. 32 bit.
+  get_url:
+    url: "https://www.dropbox.com/s/lsu52c2b4wzygvi/emulationstation32.deb?dl=1"
+    dest: "/root/emulationstation.deb"
+  when: ansible_architecture == 'i386'
+
+- name: Install attract mode.
+  apt:
+    deb: "/root/emulationstation.deb"
+
+- name: Remove deb file.
+  file:
+    path: "/root/emulationstation.deb"
+    state: absent
+
+- name: Create config dirs.
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - "/etc/skel/.emulationstation"
+    - "/etc/emulationstation/themes"
+
+- name: Copy configurations.
+  copy:
+    src: "{{ role_path }}/files/{{ item }}"
+    dest: "/{{ item }}"
+    mode: 0644
+  with_items:
+    - "etc/skel/.emulationstation/es_systems.cfg"
+    - "etc/xdg/autostart/emulationstation.desktop"
+
+- name: Download and extract emulationstation simple theme
+  unarchive:
+    src: https://emulationstation.org/downloads/themes/simple_latest.zip
+    dest: /etc/emulationstation/themes
+    remote_src: yes
+

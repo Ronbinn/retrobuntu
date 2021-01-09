@@ -1,0 +1,24 @@
+
+#Some config tweaks
+---
+- name: Powerkey to poweroff the system.
+  replace:
+    dest: /etc/systemd/logind.conf
+    regexp: '#HandlePowerKey=poweroff'
+    replace: 'HandlePowerKey=poweroff'
+
+- name: Don't save systemd journal.
+  replace:
+    dest: /etc/systemd/journald.conf
+    regexp: '#Storage=auto'
+    replace: 'Storage=volatile'
+
+- name: Disable auto update.
+  file:
+    path: /etc/systemd/system/timers.target.wants/apt-daily.timer
+    state: absent
+
+- name: Disable auto upgrade.
+  file:
+    path: /etc/systemd/system/timers.target.wants/apt-daily-upgrade.timer
+    state: absent

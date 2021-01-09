@@ -1,0 +1,43 @@
+
+#Install attractmode
+---
+- name: Install Attract Mode dependencies.
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - libjpeg62
+    - libsfml-graphics2.5
+    - libopenal1
+    - libswscale5
+    - libavformat58
+
+- name: Download attract mode deb. 64 bit.
+  get_url:
+    url: "https://www.dropbox.com/s/t6hgjya8ff1g92g/attractmode.deb?dl=1"
+    dest: "/root/attractmode.deb"
+  when: ansible_architecture == 'x86_64'
+
+- name: Download attract mode deb. 32 bit.
+  get_url:
+    url: "https://www.dropbox.com/s/pi9n7jjx3el6rcv/attractmode32.deb?dl=1"
+    dest: "/root/attractmode.deb"
+  when: ansible_architecture == 'i386'
+
+- name: Install attract mode.
+  apt:
+    deb: "/root/attractmode.deb"
+
+- name: Remove deb file.
+  file:
+    path: "/root/attractmode.deb"
+    state: absent
+
+#- name: Copy autostart.
+#  copy:
+#    src: "{{ role_path }}/files/{{ item }}"
+#    dest: "/{{ item }}"
+#    mode: 0644
+#  with_items:
+#    - "etc/xdg/autostart/attract-mode.desktop"
+

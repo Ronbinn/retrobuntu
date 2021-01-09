@@ -1,0 +1,16 @@
+#configure spanish locale
+---
+- name: Add spanish locale.
+  locale_gen:
+    name: es_ES.UTF-8
+    state: present
+  register: spanish
+
+- name: Dpkg-reconfigure locales.
+  command: /usr/sbin/dpkg-reconfigure --frontend=noninteractive locales 
+  register: out
+  when: spanish.changed  == true
+
+- name: Set spanish as default.
+  command: /usr/sbin/update-locale LANG=es_ES.UTF-8
+  when: spanish.changed  == true

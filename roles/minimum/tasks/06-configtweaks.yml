@@ -1,0 +1,96 @@
+#some config tweaks
+---
+- name: create networking.service and ifup@.service dirs.
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "/etc/systemd/system/ifup@.service.d/"
+    - "/etc/systemd/system/networking.service.d/"
+  when: ansible_distribution == 'Debian'
+
+- name: Don't disable networking at poweroff.
+  copy:
+    src: "{{ role_path }}/files/etc/systemd/system/networking.service.d/override.conf"
+    dest: "{{ item }}"
+    mode: 0644
+  with_items:
+    - "/etc/systemd/system/networking.service.d/override.conf"
+    - "/etc/systemd/system/ifup@.service.d/override.conf"
+  when: ansible_distribution == 'Debian'
+
+- name: Copy my scripts.
+  copy:
+    src: "{{ role_path }}/files/usr/local/bin/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    mode: 0755
+  with_items:
+     - getnamebymac
+     - unmute
+     - formatallbios
+     - formatalluefi
+
+- name: Unmute autostart.
+  copy:
+    src: "{{ role_path }}/files/usr/local/bin/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    mode: 0755
+  with_items:
+     - getnamebymac
+     - unmute
+
+- name: Copy my services.
+  copy:
+    src: "{{ role_path }}/files/{{ item }}"
+    dest: "/{{ item }}"
+    mode: 0644
+  with_items:
+    - "etc/systemd/system/dhclient.service"
+    - "etc/systemd/system/getnamebymac.service"
+    - "etc/xdg/autostart/unmute.desktop"
+
+- name: Copy syslinux_local.cfg.
+  copy:
+    src: "{{ role_path }}/files/root/syslinux_local.cfg"
+    dest: "/root/syslinux_local.cfg"
+    mode: 0644
+
+- name: Enable my services.
+  file:
+    src: /etc/systemd/system/{{ item }}
+    dest: /etc/systemd/system/multi-user.target.wants/{{ item }}
+    state: link
+  with_items:
+    - "getnamebymac.service"
+    - "dhclient.service"
+
+- name: Powerkey for shutdown.
+  replace:
+    dest: /etc/systemd/logind.conf
+    regexp: '#HandlePowerKey=poweroff'
+    replace: 'HandlePowerKey=poweroff'
+
+- name: Disable systemd journal.
+  replace:
+    dest: /etc/systemd/journald.conf
+    regexp: '#Storage=auto'
+    replace: 'Storage=volatile'
+
+- name: netplan configuration.
+  copy:
+    src: "{{ role_path }}/files/{{ item }}"
+    dest: "/{{ item }}"
+    mode: 0644
+  with_items:
+    - "etc/netplan/01-network-manager-all.yaml"
+  when: ansible_distribution == 'Ubuntu'
+
+- name: disable auto update.
+  file:
+    path: /etc/systemd/system/timers.target.wants/apt-daily.timer
+    state: absent
+
+- name: disable auto upgrade.
+  file:
+    path: /etc/systemd/system/timers.target.wants/apt-daily-upgrade.timer
+    state: absent

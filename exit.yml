@@ -1,0 +1,24 @@
+#chroot-etik atera aurretik garbiketa egin eta sistemak desmuntatu
+---
+- name: Apt-ren katxea hustu
+  apt:
+    autoclean: yes
+
+- name: Beharrezkoak ez diren dependentziak kendu
+  apt:
+    autoremove: yes
+
+- name: Umount proc
+  mount:
+    path: /proc
+    state: absent
+
+- name: Umount sys 
+  mount:
+    path: /sys
+    state: absent
+
+- name: Umount devpts
+  mount:
+    path: /dev/pts
+    state: absent

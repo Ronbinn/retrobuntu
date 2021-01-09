@@ -1,0 +1,5 @@
+#debian variables
+---
+include_packages: openssh-server,python-is-python3,locales,keyboard-configuration,console-setup,python3-apt
+repo1: http://ftp.fr.debian.org/debian
+compo: main,contrib,non-free

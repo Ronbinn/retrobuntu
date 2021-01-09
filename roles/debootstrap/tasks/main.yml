@@ -1,0 +1,50 @@
+#create a new system using debootstrap. variables are inside "vars" folder and hosts file
+---
+  - include_vars: "{{ suite }}.yml"
+
+  - name: Check if filesystem.squashfs exists.
+    stat:
+      path: "{{ inventory_hostname }}/live/filesystem.squashfs"
+    register: filesystem
+
+  - name: Check if squashfs-root folder exists.
+    stat:
+      path: "{{ inventory_hostname }}/live/squashfs-root"
+    register: squashdir
+
+  - name: If there is a filesystem.squashfs extract it.
+    command: chdir={{ inventory_hostname }}/live unsquashfs filesystem.squashfs
+    when:
+      - filesystem.stat.exists == True
+      - squashdir.stat.exists == False
+
+  - name: If nothing exists create.
+    file:
+      path: "{{ inventory_hostname }}/live/squashfs-root"
+      state: directory
+      mode: 0755
+    when:
+      - filesystem.stat.exists == False
+      - squashdir.stat.exists == False
+
+  - name: If nothing exists run debootstrap.
+    command: /usr/sbin/debootstrap
+             --arch={{ arch }}
+             --include={{ include_packages }}
+             --components={{ compo }}
+             --merged-usr
+             {{ suite }} {{ inventory_hostname }}/live/squashfs-root {{ repo1 }}
+    when:
+      - filesystem.stat.exists == False
+      - squashdir.stat.exists == False
+
+  - name: Remove old files.
+    file: 
+      path="{{ inventory_hostname }}/{{ item }}"
+      state=absent
+    with_items:
+      - live/filesystem.squashfs
+      - vmlinuz
+      - initrd.img
+    when:
+      - filesystem.stat.exists == True

@@ -1,0 +1,126 @@
+---
+#install minimal xfce desktop.
+- name: Xfce packages no-recommends.
+  apt:
+    name: "{{ packages }}"
+    install_recommends: no
+  vars:
+    packages:
+    - xorg
+    - xserver-xorg-video-radeon
+    - sddm
+    - pulseaudio
+    - xfce4
+    - network-manager-gnome
+    - tango-icon-theme
+    - dbus-x11
+    - policykit-1-gnome
+
+- name: SDDM autologin arcade user.
+  blockinfile:
+    dest: "/etc/sddm.conf.d/autologin.conf"
+    create: yes
+    block: |
+      [Autologin]
+      User=arcade
+      Session=xfce.desktop
+
+#configure spanish desktop
+- name: Install spanish locales.
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - aspell-es
+    - ispanish
+    - wspanish
+    - debian-reference-es
+    - util-linux-locales
+    - hunspell-es
+
+- name: Spanish locales for gnome apps. Ubuntu.
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - language-pack-gnome-es
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Spanish locales for QT apps. Ubuntu.
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - manpages-es-extra
+    - language-pack-kde-es
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Extra recommended packages.
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - xfce4-goodies
+    - pavucontrol
+    - avahi-daemon
+    - libu2f-udev
+    - lxtask
+    - ssh 
+    - sshfs 
+    - nfs-common
+    - cifs-utils
+    - gvfs-backends 
+    - gvfs-fuse
+    - file-roller
+    - suckless-tools
+
+- name: xfc4-terminal by default.
+  alternatives:
+    name: x-terminal-emulator
+    path: /usr/bin/xfce4-terminal.wrapper
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Remove screensaver and light-locker autostart.
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "/etc/xdg/autostart/xscreensaver.desktop"
+    - "/etc/xdg/autostart/light-locker.desktop"
+
+- name: Create config dirs.
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - "/etc/xdg/xfce4/xfconf/xfce-perchannel-xml"
+
+- name: Copy configurations.
+  copy:
+    src: "{{ role_path }}/files/{{ item }}"
+    dest: "/{{ item }}"
+    mode: 0644
+  with_items:
+    - "etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml"
+    - "etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml"
+    - "etc/xdg/autostart/unmute.desktop"
+
+- name: Install firefox and spanish locale. Debian.
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - firefox-esr
+    - firefox-esr-l10n-es-es
+  when: ansible_distribution == 'Debian'
+
+- name: Install firefox and spanish locale. Ubuntu.
+  apt:
+    name: "{{ packages }}"
+    install_recommends: no
+  vars:
+    packages:
+    - firefox
+    - firefox-locale-es
+  when: ansible_distribution == 'Ubuntu'

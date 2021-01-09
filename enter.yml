@@ -1,0 +1,28 @@
+#prepares chroot system
+---
+- name: Mount proc
+  mount:
+    src: none
+    path: /proc
+    fstype: proc
+    state: mounted
+
+- name: Mount sys
+  mount:
+    src: none
+    path: /sys
+    fstype: sysfs
+    state: mounted
+
+- name: Mount devpts
+  mount:
+    src: none
+    path: /dev/pts
+    fstype: devpts
+    state: mounted
+
+#inside chroot ansible detects hosts architecture, this fixes it
+- name: set i386
+  set_fact:
+    ansible_architecture: i386
+  when: arch == 'i386'

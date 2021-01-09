@@ -1,0 +1,5 @@
+#ubuntu variables
+---
+include_packages: openssh-server,python-apt,python-is-python3,tasksel
+repo1: http://es.archive.ubuntu.com/ubuntu
+compo: main,restricted,universe,multiverse

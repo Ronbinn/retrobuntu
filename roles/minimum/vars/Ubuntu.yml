@@ -1,0 +1,4 @@
+#ubuntu variables
+---
+repo1: http://es.archive.ubuntu.com/ubuntu
+compo: main restricted universe multiverse

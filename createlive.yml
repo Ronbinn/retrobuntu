@@ -1,0 +1,23 @@
+#this playbook creates a minimal instalation with debootstrap and installs a minimal system with chroot
+---
+- hosts: all
+  connection: local
+  roles:
+    - debootstrap
+
+- hosts: all
+  connection: chroot
+  vars:
+    ansible_host: "{{ inventory_hostname }}/live/squashfs-root"
+  tasks:
+    - include: enter.yml
+    - include_role:
+        name: minimum
+    - include_role:
+        name: retro
+    - include: exit.yml
+
+- hosts: all
+  connection: local
+  roles:
+    - squash

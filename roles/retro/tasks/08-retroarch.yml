@@ -1,0 +1,22 @@
+---
+- name: Install retroarch to get all the dependencies
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - retroarch
+    - libqt5concurrent5
+
+- name: Copy configurations.
+  copy:
+    src: "{{ role_path }}/files/etc/retroarch{{ card }}.cfg"
+    dest: "/etc/retroarch.cfg"
+    mode: 0644
+
+- name: Copy my script.
+  copy:
+    src: "{{ role_path }}/usr/local/bin/myretroarch"
+    dest: "/usr/local/bin/myretroarch"
+    mode: 0755
+  when: card == "intel"
+

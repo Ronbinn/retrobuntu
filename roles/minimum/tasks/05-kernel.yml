@@ -1,0 +1,64 @@
+#Install kernel
+---
+- name: Debian 32 bit kernel.
+  apt: name=linux-image-686-pae
+  when:
+    - ansible_distribution == 'Debian'
+    - ansible_architecture == 'i386'
+
+- name: Debian 64 bit kernel.
+  apt: name=linux-image-amd64
+  when:
+    - ansible_distribution == 'Debian'
+    - ansible_architecture == 'x86_64'
+
+- name: Ubuntu 64 bit kernel.
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - linux-image-generic
+    - lilo
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Install extra firmwares for Debian.
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - firmware-linux
+    - firmware-linux-nonfree
+  when: ansible_distribution == 'Debian'
+
+- name: Install live-boot scripts and some extra packages.
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - live-boot
+    - haveged
+    - watchdog
+    - syslinux
+    - syslinux-common
+    - syslinux-efi
+    - extlinux
+    - pv
+    - wget
+    - squashfs-tools
+    - parted
+    - atool
+    - zip
+    - unzip
+    - rar
+    - p7zip-full
+    - dosfstools
+    - ipxe
+    - network-manager
+    - sudo
+    - inxi
+    - zstd
+    - ntfs-3g
+    - cifs-utils
+    - libncurses-dev
+
+

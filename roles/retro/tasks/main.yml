@@ -1,0 +1,23 @@
+---
+  - include_vars: "{{ ansible_distribution }}.yml"
+
+  - include: 01-repositories.yml
+    when: ansible_distribution_release in ['buster', 'focal']
+
+  - include: 02-kernel.yml
+
+  - include: 03-packages.yml
+
+  - include: 04-tweaks.yml
+
+  - include: 05-users.yml
+
+  - include: 06-desktop.yml
+
+  - include: 07-emulationstation.yml
+
+  - include: 07-attractmode.yml
+
+  - include: 08-groovymame.yml
+
+  - include: 08-retroarch.yml

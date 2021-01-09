@@ -1,0 +1,35 @@
+#install custom packages
+---
+- name: "apt-get upgrade"
+  apt:
+    upgrade: dist
+
+- name: Install extra packages.
+  apt:
+    name: "{{ packages }}"
+    install_recommends: no
+  vars:
+    packages:
+    - sudo
+    - screen
+    - watchdog
+    - dosfstools
+    - libncurses-dev
+    - btrfs-progs
+    - ntfs-3g
+    - cifs-utils
+    - wget
+    - atool
+    - zip
+    - unzip
+    - rar
+    - p7zip-full
+
+- name: Install extra firmwares.
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - firmware-linux
+    - firmware-linux-nonfree
+  when: ansible_distribution == 'Debian'

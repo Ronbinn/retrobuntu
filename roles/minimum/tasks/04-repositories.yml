@@ -1,0 +1,52 @@
+#Add custom repositories
+---
+- name: Updates repository.
+  apt_repository:
+    repo: "{{ item  }} {{ repo1 }} {{ ansible_distribution_release }}-updates {{ compo }}"
+    state: present
+  with_items:
+    - "deb"
+    - "deb-src"
+
+- name: Backports repository.
+  apt_repository:
+    repo: "{{ item  }} {{ repo1 }} {{ ansible_distribution_release }}-backports {{ compo }}"
+    state: present
+  with_items:
+    - "deb"
+    - "deb-src"
+
+- name: Debian security repository.
+  apt_repository:
+    repo: "{{ item }} http://security.debian.org/debian-security {{ ansible_distribution_release }}/updates {{ compo }}"
+    state: present
+  with_items:
+    - "deb"
+    - "deb-src"
+  when: ansible_distribution == 'Debian'
+
+- name: Ubuntu security repository.
+  apt_repository:
+    repo: "{{ item }} http://security.ubuntu.com/ubuntu {{ ansible_distribution_release }}-security {{ compo }}"
+    state: present
+  with_items:
+    - "deb"
+    - "deb-src"
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Remove original sources.list.
+  file: 
+    path="/etc/apt/sources.list"
+    state=absent
+
+- name: Add main repositories.
+  apt_repository:
+    repo: "{{ item  }} {{ repo1 }} {{ ansible_distribution_release }} {{ compo }}"
+    state: present
+  with_items:
+    - "deb"
+    - "deb-src"
+
+- name: "apt-get update"
+  apt:
+    update_cache: yes

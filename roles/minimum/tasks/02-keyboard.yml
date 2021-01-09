@@ -1,0 +1,26 @@
+#configure spanish keyboard and use UTF-8
+---
+- name: Set spanish keyboard.
+  lineinfile:
+    dest: /etc/default/keyboard
+    regexp: 'XKBLAYOUT="us"'
+    line: 'XKBLAYOUT="es"'
+    backrefs: yes
+  register: keyboard
+
+- name: Use UTF-8.
+  lineinfile:
+    dest: /etc/default/console-setup
+    regexp: 'CHARMAP="ISO-8859-15"'
+    line: 'CHARMAP="UTF-8"'
+    backrefs: yes
+  register: utf
+
+- name: Dpkg-reconfigure keyboard-configuration
+  command: /usr/sbin/dpkg-reconfigure --frontend=noninteractive keyboard-configuration
+  when: keyboard.changed  == true
+
+- name: Dpkg-reconfigure console-setup
+  command: /usr/sbin/dpkg-reconfigure --frontend=noninteractive console-setup
+  when: utf.changed  == true
+

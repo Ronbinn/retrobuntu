@@ -1,0 +1,15 @@
+[Unit]
+Description=Run dhclient to get dns
+Wants=network-online.target
+Before=getty@tty1.service sddm.service
+After=network-online.target nss-lookup.target
+
+[Service]
+# if you have systemd >= 240, you probably want to use Type=exec instead
+Type=simple
+User=root
+ExecStart=/usr/sbin/dhclient
+TimeoutStopSec=infinity
+
+[Install]
+WantedBy=multi-user.target

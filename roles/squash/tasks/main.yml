@@ -1,0 +1,102 @@
+#clean system and create squashfs file
+---
+  - name: remove hostname 
+    shell: /bin/rm -rf {{ inventory_hostname }}/live/squashfs-root/etc/hostname
+    args:
+      warn: no
+
+  - name: cleanup | sparse files
+    shell: /bin/rm -rf {{ inventory_hostname }}/live/squashfs-root/var/cache/apt/archives/*.deb
+    args:
+      warn: no
+
+  - name: cleanup | sparse files
+    shell: /bin/rm -rf {{ inventory_hostname }}/live/squashfs-root/var/cache/apt/archives/partial/*
+    args:
+      warn: no
+
+  - name: cleanup | sparse files
+    shell: /bin/rm -rf {{ inventory_hostname }}/live/squashfs-root/var/cache/debconf/*-old
+    args:
+      warn: no
+
+  - name: cleanup | sparse files
+    shell: /bin/rm -rf {{ inventory_hostname }}/live/squashfs-root/var/lib/apt/lists/*
+    args:
+      warn: no
+
+  - name: Copy vmlinuz Debian
+    copy:
+      src: "{{ inventory_hostname }}/live/squashfs-root/vmlinuz"
+      dest: "{{ inventory_hostname }}/vmlinuz"
+      mode: 0644
+    when: distro == 'debian'
+
+  - name: Copy initrd Debian
+    copy:
+      src: "{{ inventory_hostname }}/live/squashfs-root/initrd.img"
+      dest: "{{ inventory_hostname }}/initrd.img"
+      mode: 0644
+    when: distro == 'debian'
+
+  - name: Copy vmlinuz Ubuntu
+    copy:
+      src: "{{ inventory_hostname }}/live/squashfs-root/boot/vmlinuz"
+      dest: "{{ inventory_hostname }}/vmlinuz"
+      mode: 0644
+    when: distro == 'ubuntu'
+
+  - name: Copy initrd Ubuntu
+    copy:
+      src: "{{ inventory_hostname }}/live/squashfs-root/boot/initrd.img"
+      dest: "{{ inventory_hostname }}/initrd.img"
+      mode: 0644
+    when: distro == 'ubuntu'
+
+  - name: Create syslinux uefi dir
+    file:
+      path: "{{ inventory_hostname }}/EFI/boot"
+      state: directory
+
+  - name: Copy syslinux file uefi
+    copy:
+      src: "{{ inventory_hostname }}/live/squashfs-root/usr/lib/SYSLINUX.EFI/efi64/syslinux.efi"
+      dest: "{{ inventory_hostname }}/EFI/boot/bootx64.efi"
+      mode: 0644
+
+  - name: Copy syslinux config files uefi
+    copy:
+      src: "{{ inventory_hostname }}/live/squashfs-root/usr/lib/syslinux/modules/efi64/{{ item }}"
+      dest: "{{ inventory_hostname }}/EFI/boot/{{ item }}"
+      mode: 0644
+    with_items:
+      - "libutil.c32"
+      - "menu.c32"
+      - "ldlinux.e64"
+
+  - name: Copy syslinux config files bios
+    copy:
+      src: "{{ inventory_hostname }}/live/squashfs-root/usr/lib/syslinux/modules/bios/{{ item }}"
+      dest: "{{ inventory_hostname }}/{{ item }}"
+      mode: 0644
+    with_items:
+      - "libutil.c32"
+      - "menu.c32"
+      - "ldlinux.c32"
+
+  - name: Copy syslinux menu
+    copy:
+      src: "{{ role_path }}/files/syslinux_live.cfg"
+      dest: "{{ inventory_hostname }}/{{ item }}"
+      mode: 0644
+    with_items:
+      - "syslinux.cfg"
+      - "EFI/boot/syslinux.cfg"
+
+  - name: filesystem.squashfs fitxategia sortu.
+    command: chdir={{ inventory_hostname }}/live mksquashfs squashfs-root filesystem.squashfs
+
+  - name: remove squashfs-root dir.
+    file: 
+      path="{{ inventory_hostname }}/live/squashfs-root"
+      state=absent
