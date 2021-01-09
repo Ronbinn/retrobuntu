@@ -93,7 +93,7 @@
       - "syslinux.cfg"
       - "EFI/boot/syslinux.cfg"
 
-  - name: filesystem.squashfs fitxategia sortu.
+  - name: create filesystem.squashfs file.
     command: chdir={{ inventory_hostname }}/live mksquashfs squashfs-root filesystem.squashfs
 
   - name: remove squashfs-root dir.
