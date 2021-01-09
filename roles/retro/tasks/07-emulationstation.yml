@@ -29,7 +29,7 @@
 
 - name: Download EmulationStation deb. 32 bit.
   get_url:
-    url: "https://www.dropbox.com/s/lsu52c2b4wzygvi/emulationstation32.deb?dl=1"
+    url: "https://www.dropbox.com/s/6v5kmq6sfjgjzrf/emulationstation32.deb?dl=1"
     dest: "/root/emulationstation.deb"
   when: ansible_architecture == 'i386'
 
