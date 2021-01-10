@@ -62,9 +62,9 @@
     - "etc/skel/.emulationstation/es_systems.cfg"
     - "etc/xdg/autostart/emulationstation.desktop"
 
-#- name: Download and extract emulationstation simple theme
-#  unarchive:
-#    src: https://emulationstation.org/downloads/themes/simple_latest.zip
-#    dest: /etc/emulationstation/themes
-#    remote_src: yes
+- name: Download and extract emulationstation simple theme
+  unarchive:
+    src: https://emulationstation.org/downloads/themes/simple_latest.zip
+    dest: /etc/emulationstation/themes
+    remote_src: yes
 
