@@ -106,14 +106,14 @@
     - "etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml"
     - "etc/xdg/autostart/unmute.desktop"
 
-#- name: Install firefox and spanish locale. Debian.
-#  apt:
-#    name: "{{ packages }}"
-#  vars:
-#    packages:
-#    - firefox-esr
-#    - firefox-esr-l10n-es-es
-#  when: ansible_distribution == 'Debian'
+- name: Install firefox and spanish locale. Debian.
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - firefox-esr
+    - firefox-esr-l10n-es-es
+  when: ansible_distribution == 'Debian'
 
 - name: Install firefox and spanish locale. Ubuntu.
   apt:

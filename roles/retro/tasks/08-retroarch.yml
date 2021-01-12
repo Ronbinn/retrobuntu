@@ -15,7 +15,7 @@
 
 - name: Copy my script.
   copy:
-    src: "{{ role_path }}/usr/local/bin/myretroarch"
+    src: "{{ role_path }}/files/usr/local/bin/myretroarch"
     dest: "/usr/local/bin/myretroarch"
     mode: 0755
   when: card == "intel"

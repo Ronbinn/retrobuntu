@@ -39,7 +39,7 @@
   with_items:
     - /root/linux-image-5.9.16_5.9.16-1_i386.deb
     - /root/linux-headers-5.9.16_5.9.16-1_i386.deb
-    - /root/linux-libc-dev_5.9.16-1_i386.deb
+#    - /root/linux-libc-dev_5.9.16-1_i386.deb
   when: ansible_architecture == 'i386'
 
 - name: Remove deb files.
