@@ -17,9 +17,9 @@
     url: "{{ item }}"
     dest: "/root/"
   with_items:
-    - "https://www.dropbox.com/s/bvpzpcqtji4aky4/linux-image-5.9.16_5.9.16-1_amd64.deb?dl=1"
-    - "https://www.dropbox.com/s/gi6q03x6qfq2suj/linux-headers-5.9.16_5.9.16-1_amd64.deb?dl=1"
-    - "https://www.dropbox.com/s/ghimievgzvliogw/linux-libc-dev_5.9.16-1_amd64.deb?dl=1"
+    - "https://www.dropbox.com/s/g6vwrzu9me0txpx/linux-image-5.10.6_5.10.6-1_amd64.deb?dl=1"
+    - "https://www.dropbox.com/s/zzj5ihc8llyvwis/linux-headers-5.10.6_5.10.6-1_amd64.deb?dl=1"
+    - "https://www.dropbox.com/s/f6ygb5q0xso0l41/linux-libc-dev_5.10.6-1_amd64.deb?dl=1"
     - "https://www.dropbox.com/s/kz6z53x3mbrk1i6/linux-image-5.9.16_5.9.16-1_i386.deb?dl=1"
     - "https://www.dropbox.com/s/2vigiq7h5bp8n37/linux-headers-5.9.16_5.9.16-1_i386.deb?dl=1"
     - "https://www.dropbox.com/s/fk3e75kwkee9g6q/linux-libc-dev_5.9.16-1_i386.deb?dl=1"
