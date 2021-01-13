@@ -12,47 +12,56 @@
   apt:
     name: xz-utils
 
-- name: Download kernel debs
+- name: Download kernel debs. Debian 64 bit.
   get_url:
-    url: "{{ item }}"
-    dest: "/root/"
+    url: "{{ item.src }}"
+    dest: "{{ item.dest }}"
   with_items:
-    - "https://www.dropbox.com/s/g6vwrzu9me0txpx/linux-image-5.10.6_5.10.6-1_amd64.deb?dl=1"
-    - "https://www.dropbox.com/s/zzj5ihc8llyvwis/linux-headers-5.10.6_5.10.6-1_amd64.deb?dl=1"
-    - "https://www.dropbox.com/s/f6ygb5q0xso0l41/linux-libc-dev_5.10.6-1_amd64.deb?dl=1"
-    - "https://www.dropbox.com/s/kz6z53x3mbrk1i6/linux-image-5.9.16_5.9.16-1_i386.deb?dl=1"
-    - "https://www.dropbox.com/s/2vigiq7h5bp8n37/linux-headers-5.9.16_5.9.16-1_i386.deb?dl=1"
-    - "https://www.dropbox.com/s/fk3e75kwkee9g6q/linux-libc-dev_5.9.16-1_i386.deb?dl=1"
+     - { src: "https://www.dropbox.com/s/gtetevygk90toh3/linux-image-5.10.7_5.10.7-1_amd64.deb?dl=1", dest: "root/linux_image.deb" }
+     - { src: "https://www.dropbox.com/s/x9nakcjvb6ktq2z/linux-headers-5.10.7_5.10.7-1_amd64.deb?dl=1", destt: "root/linux_headers.deb" }
+     - { src: "https://www.dropbox.com/s/jg03xji1q72ocr9/linux-libc-dev_5.10.7-1_amd64.deb?dl=1", dest: "root/linux_libc.deb" }
+  when:
+    - ansible_distribution == 'Debian'
+    - ansible_architecture == 'x86_64'
 
-- name: Install 15khz kernel debs. 64 bit.
+- name: Download kernel debs. Debian 32 bit.
+  get_url:
+    url: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+     - { src: "https://www.dropbox.com/s/9073um3lxtyw0ob/linux-image-5.10.7_5.10.7-1_i386.deb?dl=1", dest: "root/linux_image.deb" }
+     - { src: "https://www.dropbox.com/s/n3tq57h8hdeicqv/linux-headers-5.10.7_5.10.7-1_i386.deb?dl=1", dest: "root/linux_headers.deb" }
+     - { src: "https://www.dropbox.com/s/1mlxuhqyeec4ke9/linux-libc-dev_5.10.7-1_i386.deb?dl=1", dest: "root/linux_libc.deb" }
+  when:
+    - ansible_distribution == 'Debian'
+    - ansible_architecture == 'i386'
+
+- name: Download kernel debs. Ubuntu.
+  get_url:
+    url: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+     - { src: "https://www.dropbox.com/s/g6vwrzu9me0txpx/linux-image-5.10.6_5.10.6-1_amd64.deb?dl=1", dest: "root/linux_image.deb" }
+     - { src: "https://www.dropbox.com/s/zzj5ihc8llyvwis/linux-headers-5.10.6_5.10.6-1_amd64.deb?dl=1", dest: "root/linux_headers.deb" }
+     - { src: "https://www.dropbox.com/s/f6ygb5q0xso0l41/linux-libc-dev_5.10.6-1_amd64.deb?dl=1", dest: "root/linux_libc.deb" }
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Install 15khz kernel debs.
   apt:
     deb: "{{ item }}"
   with_items:
-    - /root/linux-image-5.9.16_5.9.16-1_amd64.deb
-    - /root/linux-headers-5.9.16_5.9.16-1_amd64.deb
-    - /root/linux-libc-dev_5.9.16-1_amd64.deb
-  when: ansible_architecture == 'x86_64'
-
-- name: Install 15khz kernel debs. 32 bit.
-  apt:
-    deb: "{{ item }}"
-  with_items:
-    - /root/linux-image-5.9.16_5.9.16-1_i386.deb
-    - /root/linux-headers-5.9.16_5.9.16-1_i386.deb
-#    - /root/linux-libc-dev_5.9.16-1_i386.deb
-  when: ansible_architecture == 'i386'
+    - /root/linux_image.deb
+    - /root/linux_headers.deb
+    - /root/linux_libc.deb
 
 - name: Remove deb files.
   file:
     path: "/root/{{ item }}"
     state: absent
   with_items:
-    - linux-image-5.9.16_5.9.16-1_amd64.deb
-    - linux-headers-5.9.16_5.9.16-1_amd64.deb
-    - linux-libc-dev_5.9.16-1_amd64.deb
-    - linux-image-5.9.16_5.9.16-1_i386.deb
-    - linux-headers-5.9.16_5.9.16-1_i386.deb
-    - linux-libc-dev_5.9.16-1_i386.deb
+    - /root/linux_image.deb
+    - /root/linux_headers.deb
+    - /root/linux_libc.deb
 
 - name: Remove old kernel links. Debian.
   file:
@@ -65,7 +74,7 @@
 
 - name: Create new kernel links. Debian.
   file:
-    src: "boot/{{ item }}-5.9.16"
+    src: "boot/{{ item }}-5.10.7"
     dest: "/{{ item }}"
     state: link
   with_items:
@@ -84,7 +93,7 @@
 
 - name: Create new kernel links. Ubuntu.
   file:
-    src: "{{ item }}-5.9.16"
+    src: "{{ item }}-5.10.6"
     dest: "/boot/{{ item }}"
     state: link
   with_items:
