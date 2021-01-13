@@ -7,8 +7,6 @@
   vars:
     packages:
     - libfreeimage3
-    - libboost-locale1.71.0
-    - libboost-filesystem1.71.0
     - libsdl2-2.0-0
     - libcurl4
     - libvlc-dev
@@ -22,6 +20,15 @@
     - libboost-locale1.74.0
     - libboost-filesystem1.74.0
   when: ansible_distribution == 'Debian'
+
+- name: Install EmulationStation debian dependencies.
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - libboost-locale1.71.0
+    - libboost-filesystem1.71.0
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Download EmulationStation deb. 64 bit.
   get_url:

@@ -18,7 +18,7 @@
     dest: "{{ item.dest }}"
   with_items:
      - { src: "https://www.dropbox.com/s/gtetevygk90toh3/linux-image-5.10.7_5.10.7-1_amd64.deb?dl=1", dest: "root/linux_image.deb" }
-     - { src: "https://www.dropbox.com/s/x9nakcjvb6ktq2z/linux-headers-5.10.7_5.10.7-1_amd64.deb?dl=1", destt: "root/linux_headers.deb" }
+     - { src: "https://www.dropbox.com/s/x9nakcjvb6ktq2z/linux-headers-5.10.7_5.10.7-1_amd64.deb?dl=1", dest: "root/linux_headers.deb" }
      - { src: "https://www.dropbox.com/s/jg03xji1q72ocr9/linux-libc-dev_5.10.7-1_amd64.deb?dl=1", dest: "root/linux_libc.deb" }
   when:
     - ansible_distribution == 'Debian'
