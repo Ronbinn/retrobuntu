@@ -19,9 +19,9 @@ fi
 dd if=/dev/zero of=/dev/$1 bs=10240 count=1
 parted -s /dev/$1 mklabel gpt  \
  mkpart ESP fat32 0% 200MB  \
- mkpart primary ext4 200MB 20GB  \
- mkpart primary linux-swap 20GB 24GB  \
- mkpart primary ext4 24GB 100%  \
+ mkpart primary ext4 200MB 10GB  \
+ mkpart primary linux-swap 10GB 11GB  \
+ mkpart primary ext4 11GB 100%  \
  set 1 boot on
 sync
 
