@@ -33,3 +33,10 @@
     args:
       warn: no
     when: (arcade.changed  == true) or (pam.changed  == true)
+
+  - name: Arcade user doesn't need password for sudo.
+    blockinfile:
+      dest: "/etc/sudoers.d/arcade"
+      create: yes
+      block: |
+        arcade ALL=(ALL) NOPASSWD: ALL

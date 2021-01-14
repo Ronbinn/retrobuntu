@@ -13,9 +13,35 @@
     path: "/usr/local/bin/groovymame"
   register: groovy
 
+- name: Check if exists a groovymame_226 installation.
+  stat:
+    path: "/usr/local/bin/groovymame_226"
+  register: groovy_226
+
+- name: Download and extract old groovymame. 64 bit.
+  unarchive:
+    src: https://github.com/antonioginer/GroovyMAME/releases/download/gm0226sr017s/groovymame64_0226.017s_linux.tar.bz2
+    dest: /usr/local/bin
+    remote_src: yes
+  when:
+    - groovy_226.stat.exists == false
+    - ansible_architecture == 'x86_64'
+
+- name: Download and extract old groovymame. 32 bit.
+  unarchive:
+    src: "https://www.dropbox.com/s/bpzayv77kaj5wjs/groovymame32_0226_linux.tar.bz2?dl=1"
+    dest: /usr/local/bin
+    remote_src: yes
+  when:
+    - groovy_226.stat.exists == false
+    - ansible_architecture == 'i386'
+
+- name: Move old groovymame to groovymame_226
+  command: mv /usr/local/bin/groovymame /usr/local/bin/groovymame_226
+
 - name: Download and extract groovymame. 64 bit.
   unarchive:
-    src: https://github.com/antonioginer/GroovyMAME/releases/download/gm0227sr001a/groovymame64_0227.001a_linux.tar.bz2
+    src: https://github.com/antonioginer/GroovyMAME/releases/download/gm0227sr017t/groovymame64_0227.017t_linux.tar.bz2
     dest: /usr/local/bin
     remote_src: yes
   when:
