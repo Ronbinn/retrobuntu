@@ -18,3 +18,16 @@
     src: "{{ role_path }}/files/usr/local/bin/retroarch_intel"
     dest: "/usr/local/bin/retroarch_intel"
     mode: 0755
+
+- name: Copy retroarch desktop file.
+  copy:
+    src: "/usr/share/applications/retroarch.desktop"
+    dest: "/usr/share/applications/retroarch_intel.desktop"
+    mode: 0644
+
+- name: Modify retroarch_intel desktop file.
+  lineinfile:
+    dest: /usr/share/applications/retroarch_intel.desktop
+    regexp: 'Exec=retroarch'
+    line: 'Exec=/usr/local/bin/retroarch_intel'
+    backrefs: yes

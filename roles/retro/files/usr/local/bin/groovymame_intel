@@ -1,0 +1,2 @@
+#!/bin/sh
+groovymame -dotclock_min 25.0 -aspect 1:1 $@

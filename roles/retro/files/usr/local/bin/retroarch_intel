@@ -1,4 +1,4 @@
 #!/bin/sh
 OUT=`xrandr | grep " connected" | awk 'FNR == 1 {print $1}'`
-retroarch
+retroarch $@
 xrandr --output $OUT --mode 1280x480i
