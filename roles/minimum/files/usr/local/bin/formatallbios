@@ -44,7 +44,7 @@ uuid4=`blkid -s UUID -o value /dev/${1}${p}4`
 #get syslinux files
 mkdir sda1
 mount /dev/${1}${p}1 sda1
-cp /root/syslinux_local.cfg sda1/syslinux.cfg
+cp /lib/live/mount/medium/syslinux.cfg sda1/syslinux.cfg
 cp /boot/ipxe.lkrn sda1/
 cp /usr/lib/syslinux/modules/bios/libutil.c32 sda1/
 cp /usr/lib/syslinux/modules/bios/menu.c32 sda1/

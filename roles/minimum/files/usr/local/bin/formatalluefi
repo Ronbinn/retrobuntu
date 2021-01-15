@@ -41,7 +41,7 @@ uuid4=`blkid -s UUID -o value /dev/${1}${p}4`
 mkdir sda1
 mount /dev/${1}${p}1 sda1
 mkdir -p sda1/EFI/boot
-cp /root/syslinux_local.cfg sda1/EFI/boot/syslinux.cfg
+cp /lib/live/mount/medium/syslinux.cfg sda1/EFI/boot/syslinux.cfg
 cp /usr/lib/SYSLINUX.EFI/efi64/syslinux.efi sda1/EFI/boot/bootx64.efi
 cp /usr/lib/syslinux/modules/efi64/libutil.c32 sda1/EFI/boot/
 cp /usr/lib/syslinux/modules/efi64/menu.c32 sda1/EFI/boot/
