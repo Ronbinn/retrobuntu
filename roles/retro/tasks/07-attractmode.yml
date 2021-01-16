@@ -33,7 +33,18 @@
     path: "/root/attractmode.deb"
     state: absent
 
-- name: Copy icon, desktop file and vertical config.
+- name: Create dirs for config, themes and desktop file.
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - "/usr/local/share/applications" 
+    - "/usr/local/share/attract/layouts/TheInvaders"
+    - "/usr/local/share/attract/layouts/VerticoolsDeluxe"
+    - "/etc/skel/.attract/emulators"
+
+- name: Copy icon, desktop file, vertical config and groovymame config.
   copy:
     src: "{{ role_path }}/files/{{ item }}"
     dest: "/{{ item }}"
@@ -42,15 +53,7 @@
     - "usr/local/share/applications/attract-mode.desktop"
     - "usr/local/share/attract/icon.png"
     - "etc/skel/.attract/attract_vertical"
-
-- name: Create dirs for new themes.
-  file:
-    path: "{{ item }}"
-    state: directory
-    mode: 0755
-  with_items:
-    - "/usr/local/share/attract/layouts/TheInvaders"
-    - "/usr/local/share/attract/layouts/VerticoolsDeluxe"
+    - "etc/skel/.attract/emulators/groovy.cfg"
 
 - name: Extract new themes.
   unarchive:

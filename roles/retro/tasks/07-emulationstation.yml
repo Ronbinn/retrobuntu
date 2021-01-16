@@ -59,6 +59,7 @@
   with_items:
     - "/etc/skel/.emulationstation"
     - "/etc/emulationstation/themes"
+    - "/usr/local/share/applications"
 
 - name: Copy configurations and desktop file.
   copy:
