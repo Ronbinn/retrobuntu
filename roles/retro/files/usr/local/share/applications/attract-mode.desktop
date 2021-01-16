@@ -6,3 +6,4 @@ Exec=/usr/local/bin/attract
 Terminal=false
 Type=Application
 Categories=Game
+Icon=/usr/local/share/attract/icon.png

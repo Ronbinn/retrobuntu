@@ -33,11 +33,17 @@
     path: "/root/attractmode.deb"
     state: absent
 
-#- name: Copy autostart.
-#  copy:
-#    src: "{{ role_path }}/files/{{ item }}"
-#    dest: "/{{ item }}"
-#    mode: 0644
-#  with_items:
-#    - "etc/xdg/autostart/attract-mode.desktop"
+- name: Copy icon and desktop file.
+  copy:
+    src: "{{ role_path }}/files/{{ item }}"
+    dest: "/{{ item }}"
+    mode: 0644
+  with_items:
+    - "usr/local/share/applications/attract-mode.desktop"
+    - "usr/local/share/attract/icon.png"
 
+#- name: Autostart.
+#  copy:
+#    src: "{{ role_path }}/files/usr/local/share/applications/attract-mode.desktop"
+#    dest: "/etc/xdg/autostart/attract-mode.desktop"
+#    mode: 0644

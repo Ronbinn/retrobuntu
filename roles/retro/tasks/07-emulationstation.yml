@@ -58,22 +58,22 @@
     mode: 0755
   with_items:
     - "/etc/skel/.emulationstation"
-#    - "/etc/emulationstation/themes"
+    - "/etc/emulationstation/themes"
 
-- name: Copy configurations.
+- name: Copy configurations and desktop file.
   copy:
     src: "{{ role_path }}/files/{{ item }}"
     dest: "/{{ item }}"
     mode: 0644
   with_items:
     - "etc/skel/.emulationstation/es_systems.cfg"
-    - "etc/xdg/autostart/emulationstation.desktop"
+    - "usr/local/share/applications/emulationstation.desktop"
 
-- name: Create EmulationStation themes directory.
-  file:
-    path: /etc/emulationstation/themes
-    state: directory
-    mode: 0755
+- name: Autostart.
+  copy:
+    src: "{{ role_path }}/files/usr/local/share/applications/emulationstation.desktop"
+    dest: "/etc/xdg/autostart/emulationstation.desktop"
+    mode: 0644
 
 - name: Download and extract emulationstation simple theme
   unarchive:
