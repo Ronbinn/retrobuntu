@@ -42,6 +42,23 @@
     - "usr/local/share/applications/attract-mode.desktop"
     - "usr/local/share/attract/icon.png"
 
+- name: Create dirs for new themes.
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - "/usr/local/share/attract/layouts/TheInvaders"
+    - "/usr/local/share/attract/layouts/VerticoolsDeluxe"
+
+- name: Extract new themes.
+  unarchive:
+    src: "{{ role_path }}/files/attractmodethemes/{{ item }}.zip"
+    dest: "/usr/local/share/attract/layouts/{{ item }}"
+  with_items:
+    - "TheInvaders"
+    - "VerticoolsDeluxe"
+
 #- name: Autostart.
 #  copy:
 #    src: "{{ role_path }}/files/usr/local/share/applications/attract-mode.desktop"
