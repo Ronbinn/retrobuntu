@@ -33,7 +33,7 @@
     path: "/root/attractmode.deb"
     state: absent
 
-- name: Copy icon and desktop file.
+- name: Copy icon, desktop file and filters.
   copy:
     src: "{{ role_path }}/files/{{ item }}"
     dest: "/{{ item }}"
@@ -41,6 +41,7 @@
   with_items:
     - "usr/local/share/applications/attract-mode.desktop"
     - "usr/local/share/attract/icon.png"
+    - "etc/skel/.attract/filters"
 
 - name: Create dirs for new themes.
   file:
