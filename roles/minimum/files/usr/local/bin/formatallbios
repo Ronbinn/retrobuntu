@@ -84,19 +84,11 @@ echo "removing unmute"
 if test -f "sda2/etc/xdg/autostart/unmute.desktop"; then
     rm sda2/etc/xdg/autostart/unmute.desktop
 fi
-echo "restoring NetworkManager"
-if test -f "sda2/usr/share/applications/nm-applet.desktop"; then
-    cp sda2/usr/share/applications/nm-applet.desktop sda2/etc/xdg/autostart/nm-applet.desktop
-fi
 echo "disabling dchlient service"
 if test -f "/etc/systemd/system/multi-user.target.wants/dhclient.service"; then
     rm /etc/systemd/system/multi-user.target.wants/dhclient.service
 fi
-echo "disabling swapiness service"
-if test -f "/etc/systemd/system/multi-user.target.wants/swapiness.service"; then
-    rm /etc/systemd/system/multi-user.target.wants/swapiness.service
-fi
-sed -i.bak 's,sda2,'"UUID=$uuid2"',g' sda1/syslinux.cfg
+sed -i.bak 's,boot=live,rw root='"UUID=$uuid2"',g' sda1/syslinux.cfg
 umount /dev/${1}${p}1
 umount /dev/${1}${p}2
 rmdir sda1
