@@ -61,6 +61,7 @@
     dest: "/usr/local/share/attract/layouts/{{ item }}"
   with_items:
     - "TheInvaders"
+    - "TheInvaders2"
     - "VerticoolsDeluxe"
 
 #- name: Autostart.
