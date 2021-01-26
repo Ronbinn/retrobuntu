@@ -41,6 +41,7 @@
   with_items:
     - "/usr/local/share/applications" 
     - "/usr/local/share/attract/layouts/TheInvaders"
+    - "/usr/local/share/attract/layouts/TheInvaders2"
     - "/usr/local/share/attract/layouts/VerticoolsDeluxe"
     - "/etc/skel/.attract/emulators"
 
