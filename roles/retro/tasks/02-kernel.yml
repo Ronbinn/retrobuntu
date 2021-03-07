@@ -41,9 +41,9 @@
     url: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-     - { src: "https://www.dropbox.com/s/g6vwrzu9me0txpx/linux-image-5.10.6_5.10.6-1_amd64.deb?dl=1", dest: "root/linux_image.deb" }
-     - { src: "https://www.dropbox.com/s/zzj5ihc8llyvwis/linux-headers-5.10.6_5.10.6-1_amd64.deb?dl=1", dest: "root/linux_headers.deb" }
-     - { src: "https://www.dropbox.com/s/f6ygb5q0xso0l41/linux-libc-dev_5.10.6-1_amd64.deb?dl=1", dest: "root/linux_libc.deb" }
+     - { src: "https://www.dropbox.com/s/g6vwrzu9me0txpx/linux-image-5.10.6_5.10.6-1_amd64.deb?dl=1", dest: "/root/linux_image.deb" }
+     - { src: "https://www.dropbox.com/s/zzj5ihc8llyvwis/linux-headers-5.10.6_5.10.6-1_amd64.deb?dl=1", dest: "/root/linux_headers.deb" }
+     - { src: "https://www.dropbox.com/s/f6ygb5q0xso0l41/linux-libc-dev_5.10.6-1_amd64.deb?dl=1", dest: "/root/linux_libc.deb" }
   when: ansible_distribution == 'Ubuntu'
 
 - name: Install 15khz kernel debs.
