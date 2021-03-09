@@ -17,9 +17,9 @@
     url: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-     - { src: "https://www.dropbox.com/s/gtetevygk90toh3/linux-image-5.10.7_5.10.7-1_amd64.deb?dl=1", dest: "root/linux_image.deb" }
-     - { src: "https://www.dropbox.com/s/x9nakcjvb6ktq2z/linux-headers-5.10.7_5.10.7-1_amd64.deb?dl=1", dest: "root/linux_headers.deb" }
-     - { src: "https://www.dropbox.com/s/jg03xji1q72ocr9/linux-libc-dev_5.10.7-1_amd64.deb?dl=1", dest: "root/linux_libc.deb" }
+     - { src: "https://www.dropbox.com/s/axyffome9mio3oe/linux-image-5.10.21_5.10.21-1_amd64.deb?dl=1", dest: "root/linux_image.deb" }
+     - { src: "https://www.dropbox.com/s/15kg94b5qn84am4/linux-headers-5.10.21_5.10.21-1_amd64.deb?dl=1", dest: "root/linux_headers.deb" }
+     - { src: "https://www.dropbox.com/s/7ipgnfn1yv9hd7r/linux-libc-dev_5.10.21-1_amd64.deb?dl=1", dest: "root/linux_libc.deb" }
   when:
     - ansible_distribution == 'Debian'
     - ansible_architecture == 'x86_64'
@@ -29,9 +29,9 @@
     url: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-     - { src: "https://www.dropbox.com/s/9073um3lxtyw0ob/linux-image-5.10.7_5.10.7-1_i386.deb?dl=1", dest: "root/linux_image.deb" }
-     - { src: "https://www.dropbox.com/s/n3tq57h8hdeicqv/linux-headers-5.10.7_5.10.7-1_i386.deb?dl=1", dest: "root/linux_headers.deb" }
-     - { src: "https://www.dropbox.com/s/1mlxuhqyeec4ke9/linux-libc-dev_5.10.7-1_i386.deb?dl=1", dest: "root/linux_libc.deb" }
+     - { src: "https://www.dropbox.com/s/22hob6usmw4wjdn/linux-image-5.10.21_5.10.21-1_i386.deb?dl=1", dest: "root/linux_image.deb" }
+     - { src: "https://www.dropbox.com/s/ucaonymkpko7mxo/linux-headers-5.10.21_5.10.21-1_i386.deb?dl=1", dest: "root/linux_headers.deb" }
+     - { src: "https://www.dropbox.com/s/q4s2fx93nlgz2yk/linux-libc-dev_5.10.21-1_i386.deb?dl=1", dest: "root/linux_libc.deb" }
   when:
     - ansible_distribution == 'Debian'
     - ansible_architecture == 'i386'
