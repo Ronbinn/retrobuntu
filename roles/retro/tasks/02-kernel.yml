@@ -74,7 +74,7 @@
 
 - name: Create new kernel links. Debian.
   file:
-    src: "boot/{{ item }}-5.10.7"
+    src: "boot/{{ item }}-5.10.21"
     dest: "/{{ item }}"
     state: link
   with_items:

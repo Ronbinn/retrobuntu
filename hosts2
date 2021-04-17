@@ -1,0 +1,3 @@
+/home/tftp/livecds/retrobuntu		distro=ubuntu	suite=focal	arch=amd64	card=ati
+/home/tftp/livecds/retrodebian32		distro=debian	suite=bullseye	arch=i386	card=intel   ansible_python_interpreter=/usr/bin/python3
+/home/tftp/livecds/retrodebian64		distro=debian	suite=bullseye	arch=amd64	card=intel   ansible_python_interpreter=/usr/bin/python3

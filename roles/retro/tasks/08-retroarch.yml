@@ -24,6 +24,7 @@
     src: "/usr/share/applications/retroarch.desktop"
     dest: "/usr/share/applications/retroarch_intel.desktop"
     mode: 0644
+    remote_src: yes
 
 - name: Modify retroarch_intel desktop file.
   lineinfile:
