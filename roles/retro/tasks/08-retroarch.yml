@@ -19,12 +19,25 @@
     dest: "/usr/local/bin/retroarch_intel"
     mode: 0755
 
-- name: Copy retroarch desktop file.
+- name: Copy retroarch ati script.
+  copy:
+    src: "{{ role_path }}/files/usr/local/bin/retroarch_ati"
+    dest: "/usr/local/bin/retroarch_ati"
+    mode: 0755
+
+- name: Copy retroarch desktop file for intel.
   copy:
     src: "/usr/share/applications/retroarch.desktop"
     dest: "/usr/share/applications/retroarch_intel.desktop"
     mode: 0644
     remote_src: yes
+
+- name: Modify retroarch desktop file.
+  lineinfile:
+    dest: /usr/share/applications/retroarch.desktop
+    regexp: 'Exec=retroarch'
+    line: 'Exec=/usr/local/bin/retroarch_ati'
+    backrefs: yes
 
 - name: Modify retroarch_intel desktop file.
   lineinfile:

@@ -15,7 +15,7 @@
 
 - name: Download and extract groovymame. 64 bit.
   unarchive:
-    src: https://github.com/antonioginer/GroovyMAME/releases/download/gm0228sr001b/groovymame64_0228.001b_linux.tar.bz2
+    src: https://github.com/antonioginer/GroovyMAME/releases/download/gm0229sr002a/groovymame_0229.002a_linux.tar.bz2
     dest: /usr/local/bin
     remote_src: yes
   when:
@@ -66,4 +66,10 @@
   copy:
     src: "{{ role_path }}/files/usr/local/bin/groovymame_intel"
     dest: "/usr/local/bin/groovymame_intel"
+    mode: 0755
+
+- name: Copy groovymame ati script.
+  copy:
+    src: "{{ role_path }}/files/usr/local/bin/groovymame_ati"
+    dest: "/usr/local/bin/groovymame_ati"
     mode: 0755
