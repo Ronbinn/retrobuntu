@@ -53,6 +53,7 @@
     - /root/linux_image.deb
     - /root/linux_headers.deb
     - /root/linux_libc.deb
+  ignore_errors: yes
 
 - name: Remove deb files.
   file:
