@@ -17,9 +17,9 @@
     url: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-     - { src: "https://www.dropbox.com/s/ye2746h4eobohmn/linux-image-5.14.16_5.14.16-1_amd64.deb?dl=1", dest: "root/linux_image.deb" }
-     - { src: "https://www.dropbox.com/s/pl1l8mdtkdwmby3/linux-headers-5.14.16_5.14.16-1_amd64.deb?dl=1", dest: "root/linux_headers.deb" }
-     - { src: "https://www.dropbox.com/s/3y467a9uo2hw6xk/linux-libc-dev_5.14.16-1_amd64.deb?dl=1", dest: "root/linux_libc.deb" }
+     - { src: "https://www.dropbox.com/s/ye2746h4eobohmn/linux-image-5.14.16_5.14.16-1_amd64.deb?dl=1", dest: "/root/linux_image.deb" }
+     - { src: "https://www.dropbox.com/s/pl1l8mdtkdwmby3/linux-headers-5.14.16_5.14.16-1_amd64.deb?dl=1", dest: "/root/linux_headers.deb" }
+     - { src: "https://www.dropbox.com/s/3y467a9uo2hw6xk/linux-libc-dev_5.14.16-1_amd64.deb?dl=1", dest: "/root/linux_libc.deb" }
   when:
     - ansible_distribution == 'Debian'
     - ansible_architecture == 'x86_64'
@@ -29,9 +29,9 @@
     url: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-     - { src: "https://www.dropbox.com/s/22hob6usmw4wjdn/linux-image-5.10.21_5.10.21-1_i386.deb?dl=1", dest: "root/linux_image.deb" }
-     - { src: "https://www.dropbox.com/s/ucaonymkpko7mxo/linux-headers-5.10.21_5.10.21-1_i386.deb?dl=1", dest: "root/linux_headers.deb" }
-     - { src: "https://www.dropbox.com/s/q4s2fx93nlgz2yk/linux-libc-dev_5.10.21-1_i386.deb?dl=1", dest: "root/linux_libc.deb" }
+     - { src: "https://www.dropbox.com/s/22hob6usmw4wjdn/linux-image-5.10.21_5.10.21-1_i386.deb?dl=1", dest: "/root/linux_image.deb" }
+     - { src: "https://www.dropbox.com/s/ucaonymkpko7mxo/linux-headers-5.10.21_5.10.21-1_i386.deb?dl=1", dest: "/root/linux_headers.deb" }
+     - { src: "https://www.dropbox.com/s/q4s2fx93nlgz2yk/linux-libc-dev_5.10.21-1_i386.deb?dl=1", dest: "/root/linux_libc.deb" }
   when:
     - ansible_distribution == 'Debian'
     - ansible_architecture == 'i386'
@@ -75,7 +75,7 @@
 
 - name: Create new kernel links. Debian.
   file:
-    src: "boot/{{ item }}-5.10.21"
+    src: "boot/{{ item }}-5.14.16"
     dest: "/{{ item }}"
     state: link
   with_items:
@@ -94,7 +94,7 @@
 
 - name: Create new kernel links. Ubuntu.
   file:
-    src: "{{ item }}-5.10.6"
+    src: "{{ item }}-5.14.16"
     dest: "/boot/{{ item }}"
     state: link
   with_items:
