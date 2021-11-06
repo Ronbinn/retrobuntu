@@ -17,9 +17,9 @@
     url: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-     - { src: "https://www.dropbox.com/s/axyffome9mio3oe/linux-image-5.10.21_5.10.21-1_amd64.deb?dl=1", dest: "root/linux_image.deb" }
-     - { src: "https://www.dropbox.com/s/15kg94b5qn84am4/linux-headers-5.10.21_5.10.21-1_amd64.deb?dl=1", dest: "root/linux_headers.deb" }
-     - { src: "https://www.dropbox.com/s/7ipgnfn1yv9hd7r/linux-libc-dev_5.10.21-1_amd64.deb?dl=1", dest: "root/linux_libc.deb" }
+     - { src: "https://www.dropbox.com/s/ye2746h4eobohmn/linux-image-5.14.16_5.14.16-1_amd64.deb?dl=1", dest: "root/linux_image.deb" }
+     - { src: "https://www.dropbox.com/s/pl1l8mdtkdwmby3/linux-headers-5.14.16_5.14.16-1_amd64.deb?dl=1", dest: "root/linux_headers.deb" }
+     - { src: "https://www.dropbox.com/s/3y467a9uo2hw6xk/linux-libc-dev_5.14.16-1_amd64.deb?dl=1", dest: "root/linux_libc.deb" }
   when:
     - ansible_distribution == 'Debian'
     - ansible_architecture == 'x86_64'
@@ -41,9 +41,9 @@
     url: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-     - { src: "https://www.dropbox.com/s/g6vwrzu9me0txpx/linux-image-5.10.6_5.10.6-1_amd64.deb?dl=1", dest: "/root/linux_image.deb" }
-     - { src: "https://www.dropbox.com/s/zzj5ihc8llyvwis/linux-headers-5.10.6_5.10.6-1_amd64.deb?dl=1", dest: "/root/linux_headers.deb" }
-     - { src: "https://www.dropbox.com/s/f6ygb5q0xso0l41/linux-libc-dev_5.10.6-1_amd64.deb?dl=1", dest: "/root/linux_libc.deb" }
+     - { src: "https://www.dropbox.com/s/dw8dqm4q73z06hl/linux-image-5.14.16_5.14.16-1_i386.deb?dl=1", dest: "/root/linux_image.deb" }
+     - { src: "https://www.dropbox.com/s/holloptrph5zuec/linux-headers-5.14.16_5.14.16-1_i386.deb?dl=1", dest: "/root/linux_headers.deb" }
+     - { src: "https://www.dropbox.com/s/g9jzoj7s8mwf5gf/linux-libc-dev_5.14.16-1_i386.deb?dl=1", dest: "/root/linux_libc.deb" }
   when: ansible_distribution == 'Ubuntu'
 
 - name: Install 15khz kernel debs.
